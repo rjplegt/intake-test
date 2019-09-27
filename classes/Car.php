@@ -145,15 +145,13 @@ class Car
 
     /**
      * Returns the owner of the car
-     * @return array/null
+     * @return Customer/null
      */
-    public function getCustomerOfCar()
+    public function getCustomerOfCar() : Customer
     {
-        $customer = $this->db->getAllRows(sprintf('SELECT * FROM customer WHERE id = %d', $this->getCustomerId()));
-        if (count($customer) > 0) {
-            return $customer[0];
-        }
-        return null;
+        $customer = new Customer($this->getCustomerId());
+
+        return $customer;
     }
 
     /**

@@ -120,7 +120,7 @@ class Customer{
      * Customer constructor.
      * @param int $id
      */
-    public function __construct($id)
+    public function __construct($id = null)
     {
         $this->db = new Database;
 
@@ -130,10 +130,20 @@ class Customer{
     }
 
     /**
+     * Return the amount of cars related to a customer
+     * @return int
+     */
+    public function getCarsCount(): int{
+        $query = $this->getDb()->db->query('SELECT COUNT(id) as count FROM car WHERE customer_id = ' . $this->getId());
+        $result = $query->fetch();
+        return (int)$result['count'];
+    }
+
+    /**
      * Loads customer by id from database;
      * @param $id int Customer_id
      */
-    private function loadCustomer($id): void
+    public function loadCustomer($id): void
     {
         $customer = $this->db->getAllRows(sprintf('SELECT * FROM customer WHERE id = %d', $id));
 

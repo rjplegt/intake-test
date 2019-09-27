@@ -119,20 +119,46 @@ class Task{
      * Task constructor.
      * @param $id
      */
-    public function __construct($id)
+    public function __construct($id = null)
     {
         $this->db = new Database;
 
         if (!empty($id)) {
-            $this->loadTaks($id);
+            $this->loadTask($id);
         }
     }
+
+    /**
+     * Return the car related to the task
+     * @return Car/null
+     */
+    public function getCar() : Car {
+        $car = new Car($this->getCarId());
+
+        return $car;
+    }
+
+    /**
+     * Return the customer related to the task
+     * @return Customer/null
+     */
+    public function getCustomer(Car $car = null) : Customer {
+        //if a car isset use that car to to get the customer (giving the car parameter some extra query executions can be prevented)
+        //check if the car has an id and is not just an empty object
+        //also check if the car id's are the same to prevent retrieving the wrong user
+        if(!isset($car) && $car->getId() > 0 && $car->getId() == $this->getCarId()){
+            return $car->getCustomerOfCar();
+        }
+
+        return $this->getCar()->getCustomerOfCar();
+    }
+
 
     /**
      * Loads task by id from database;
      * @param $id
      */
-    private function loadTaks($id)
+    public function loadTask($id)
     {
         $task = $this->db->getAllRows(sprintf('SELECT * FROM task WHERE id = %d', $id));
 

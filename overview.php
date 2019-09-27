@@ -14,22 +14,16 @@ if (!$_SESSION['logged_in']) {
 
 require_once(__DIR__.'/services/Database.php');
 require(__DIR__.'/classes/Car.php');
+require(__DIR__.'/classes/Customer.php');
+require(__DIR__.'/classes/Task.php');
 
 $db = new Database;
 
-
-//TODO: Make sure what they returned is sorted by name
-$customers = $db->getAllRows('SELECT customer.*, COUNT(car.id) as number_of_cars 
-                                    FROM customer
-                                    JOIN car on car.customer_id = customer.id
-                                    GROUP BY customer.id');
+$customers = $db->getAllRows('SELECT * FROM customer ORDER BY last_name, first_name DESC');
 
 $cars = $db->getAllRows('SELECT car.id FROM car');
 
-$jobs = $db->getAllRows('SELECT task.*, customer.*, car.*
-                                FROM task
-                                JOIN car on task.car_id = car.id
-                                JOIN customer on car.customer_id = customer.id');
+$jobs = $db->getAllRows('SELECT * FROM task');
 
 
 ?>
@@ -85,10 +79,14 @@ $jobs = $db->getAllRows('SELECT task.*, customer.*, car.*
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($customers as $customer): ?>
+                <?php
+                $customer = new Customer();
+                foreach ($customers as $customer_id):
+                    $customer->loadCustomer($customer_id['id']);
+                    ?>
                     <tr>
-                        <td><?= $customer['first_name'] . ' ' . $customer['last_name'] ?></td>
-                        <td><?= $customer['number_of_cars'] ?></td>
+                        <td><?= $customer->getFirstName() . ' ' . $customer->getLastName() ?></td>
+                        <td><?= $customer->getCarsCount() ?></td>
                     </tr>
                 <?php endforeach ?>
                 </tbody>
@@ -113,7 +111,7 @@ $jobs = $db->getAllRows('SELECT task.*, customer.*, car.*
                     $owner = $car->getCustomerOfCar();
                     ?>
                     <tr>
-                        <td><?= $owner['first_name'] . ' ' . $owner['last_name'] ?></td>
+                        <td><?= $owner->getFirstName() . ' ' . $owner->getLastName() ?></td>
                         <td><?= $car->getBrand() ?></td>
                         <td><?= $car->getType() ?></td>
                         <td><?= $car->getNumberOfTasksOfCar() ?></td>
@@ -133,12 +131,18 @@ $jobs = $db->getAllRows('SELECT task.*, customer.*, car.*
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($jobs as $job): ?>
+                <?php
+                $task = new Task();
+                foreach ($jobs as $job):
+                    $task->loadTask($job['id']);
+                    $car = $task->getCar();
+                    $customer = $task->getCustomer($car);
+                    ?>
                     <tr>
-                        <td><?= $job['first_name'] . ' ' . $job['last_name'] ?></td>
-                        <td><?= $job['brand'] ?></td>
-                        <td><?= $job['type'] ?></td>
-                        <td><?= $job['task'] ?></td>
+                        <td><?= $customer->getFirstName() . ' ' . $customer->getLastName() ?></td>
+                        <td><?= $car->getBrand() ?></td>
+                        <td><?= $car->getType() ?></td>
+                        <td><?= $task->getTask() ?></td>
                     </tr>
                 <?php endforeach ?>
                 </tbody>
