@@ -44,13 +44,13 @@ function createTask($input){
 
         //if task was successfully made redirect with success status
         if($taskId > 0){
-            header('Location: /overview.php?action_status=create_success');
+            header('Location: /index.php?page=overview&action_status=create_success');
         } else {
-            header('Location: /overview.php?action_status=create_failed');
+            header('Location: /index.php?page=add-task&action_status=create_failed');
         }
     } else {
         //invalid input redirect validation failed status
-        header('Location: /overview.php?action_status=validation_failed');
+        header('Location: /index.php?page=add-task&action_status=validation_failed');
     }
 
 }

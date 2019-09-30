@@ -51,7 +51,7 @@ function createCustomer($input){
 
         //if customer was successfully made redirect with success status
         if($customerId > 0){
-            header('Location: /overview.php?action_status=create_success');
+            header('Location: /index.php?page=overview&action_status=create_success#klanten');
         } else {
             header('Location: /overview.php?action_status=create_failed');
         }
