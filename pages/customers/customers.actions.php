@@ -53,11 +53,11 @@ function createCustomer($input){
         if($customerId > 0){
             header('Location: /index.php?page=overview&action_status=create_success#klanten');
         } else {
-            header('Location: /overview.php?action_status=create_failed');
+            header('Location: /index.php?page=add-customer&action_status=create_failed');
         }
     } else {
         //invalid input redirect validation failed status
-        header('Location: /overview.php?action_status=validation_failed');
+        header('Location: /index.php?page=add-customer&action_status=validation_failed');
     }
 
 }

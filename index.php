@@ -18,7 +18,7 @@ require_once(__DIR__ . '/services/AuthenticationCheck.php');
     <?php
         include('partials/nav.php');
     ?>
-    <div class="container">
+    <div class="container pt-3">
         <?php
             $pages = [
                 "overview" => "overview/overview.page.php",
@@ -26,19 +26,21 @@ require_once(__DIR__ . '/services/AuthenticationCheck.php');
                 "add-task" => "tasks/new-task.page.php"
             ];
 
+            //the page that is loaded when no $_GET['page'] was given
             $default_page = __DIR__ . '/pages/' . $pages['overview'];
 
-
-
+            //is a specific page request?
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
 
                 if(strlen($page) > 0 && array_key_exists($page, $pages)){
+                    //show the requested page
                     include(__DIR__ . '/pages/' . $pages[$page]);
                 } else {
                     include($default_page);
                 }
             } else {
+                //show the default page
                 include($default_page);
             }
         ?>

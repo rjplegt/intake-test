@@ -1,6 +1,8 @@
+<!DOCTYPE html>
+<html>
+<head>
 <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-grid.css">
-
 <style>
     .vertical-center {
         min-height: 80%; /* Fallback for browsers do NOT support vh unit */
@@ -10,39 +12,39 @@
         align-items: center;
     }
 </style>
-
+</head>
+<body>
 <div class="container d-flex justify-content-center vertical-center">
-    <form action="authenticate.php" method="POST">
-        <h3>Login</h3>
-        <table>
-            <tr>
-                <td>Login:</td>
-                <td><input name="login"></td>
-            </tr>
-            <tr>
-                <td>Wachtwoord:</td>
+    <div class="card w-50">
+        <h5 class="card-header">Inloggen</h5>
+        <div class="card-body">
+            <form action="authenticate.php" method="POST">
+                <?php
 
-                <!--            TODO: zorg ervoor dat bij password input wat je invult verborgen/niet zichtbaar is-->
+                if (isset($_GET['login_failed'])) {
+                    ?>
 
-                <td><input name="password"></td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="Log in">
-                </td>
-            </tr>
-        </table>
-    </form><br>
-    <?php
+                    <div style="color:red;">Kon niet inloggen: Login of wachtwoord incorrect</div>
+                    <?php
+                }
 
-    if (isset($_GET['login_failed'])) {
-        ?>
+                ?>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Naam</label>
+                    <input type="text" class="form-control" name="login" placeholder="Naam">
+                </div>
+                <div class="form-group">
+                    <label for="password">Wachtwoord</label>
+                    <input type="password" class="form-control" name="password" placeholder="Wachtwoord">
+                </div>
+                <button type="submit" class="btn btn-primary">Inloggen</button>
+            </form>
 
-        <div style="color:red;">Kon niet inloggen: Login of wachtwoord incorrect</div>
-        <?php
-    }
+        </div>
+    </div>
 
-    ?>
 </div>
+</body>
+</html>
 
 

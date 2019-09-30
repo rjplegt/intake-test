@@ -1,29 +1,32 @@
-<form action="/pages/customers/customers.actions.php?action=new" method="post">
-    <h3>Persoon</h3>
-    <table>
-        <tr>
-            <td>Voornaam:</td>
-            <td><input name="first_name"></td>
-        </tr>
-        <tr>
-            <td>Achternaam:</td>
-            <td><input name="last_name"></td>
-        </tr>
-        <tr>
-            <td>Leeftijd:</td>
-            <td><input name="leeftijd"></td>
-        </tr>
-    </table>
-    <h3> Auto</h3>
-    <table>
-        <tr>
-            <td>Merk:</td>
-            <td><input name="brand"></td>
-        </tr>
-        <tr>
-            <td>Type:</td>
-            <td><input name="type"></td>
-        </tr>
-    </table>
-    <input type="submit" value="Invoeren"/>
-</form>
+<div class="card">
+    <h5 class="card-header">Klant toevoegen</h5>
+    <div class="card-body">
+        <form action="/pages/customers/customers.actions.php?action=new" method="post">
+            <h4>Persoon</h4>
+            <div class="form-group">
+                <label for="first_name">Voornaam</label>
+                <input type="text" class="form-control" name="first_name" placeholder="Voornaam">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Achternaam</label>
+                <input type="text" class="form-control" name="last_name" placeholder="Achternaam">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Achternaam</label>
+                <input type="number" class="form-control" name="leeftijd" placeholder="Leeftijd">
+            </div>
+
+            <h4>Auto</h4>
+            <div class="form-group">
+                <label for="brand">Merk</label>
+                <input type="text" class="form-control" name="brand" placeholder="Merk">
+            </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <input type="text" class="form-control" name="type" placeholder="Type">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Toevoegen</button>
+        </form>
+    </div>
+</div>
