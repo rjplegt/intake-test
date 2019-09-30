@@ -9,19 +9,27 @@
     <h5 class="card-header">Taak toevoegen</h5>
     <div class="card-body">
         <form action="/pages/tasks/tasks.actions.php?action=new" method="post">
+            <?php
+                if(isset($_GET['validation_failed'])){
+                    ?>
+                    <div class="alert alert-success" role="alert">
+                        Vul de velden correct in!
+                    </div>
+                    <?php
+                }
+            ?>
             <h4>Auto</h4>
             <div class="form-group">
                 <label for="first_name">Voornaam</label>
-                <select name="car" class="form-control">
+                <select name="car" class="form-control" required>
                     <?php foreach ($cars as $car): ?>
                         <option value="<?= $car['id'] ?>"><?= $car['first_name'] . ' ' . $car['last_name'] . '\'s ' . $car['brand'] . ' ' . $car['type'] ?></option>
-
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="first_name">Klus</label>
-                <input type="text" class="form-control" name="task" placeholder="Klus">
+                <input type="text" class="form-control" name="task" placeholder="Klus" required>
             </div>
             <button type="submit" class="btn btn-primary">Toevoegen</button>
         </form>
