@@ -1,7 +1,5 @@
 <?php
 
-//start session and check if a user is logged in.
-require_once('../../services/AuthenticationCheck.php');
 require_once('../../classes/Customer.php');
 require_once('../../classes/Car.php');
 require_once('../../vendor/autoload.php');
@@ -22,7 +20,7 @@ if(isset($_GET['action'])){
     }
 } else {
     //no action isset, redirect
-    header('Location: /overview.php?action_status=null_action');
+    header('Location: /index.php?page=overview&action_status=null_action');
 }
 
 /**
