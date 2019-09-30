@@ -155,4 +155,24 @@ class Customer{
         }
     }
 
+    /**
+     * Create new customer and store it in the database
+     * @param $firstname
+     * @param $lastname
+     * @param $age
+     * @return int id of the newly created customer
+     */
+    public static function createCustomer($firstname, $lastname, $age) : int{
+        $customer = new Customer();
+
+        //store customer
+        $customer->getDb()->execQuery("INSERT INTO `customer`(`first_name`, `last_name`, `age`) VALUES ('" . $firstname . "', '" . $lastname . "', " . $age . ")");
+        //get id of newly created customer
+        $customerID = (int)$customer->getDb()->getAllRows('SELECT max(ID) as id From customer')[0]['id'];
+
+        return $customerID;
+    }
+
+
+
 }

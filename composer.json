@@ -3,7 +3,8 @@
     "description": "UNIT4 Verzuimsignaal Intake Project",
     "type": "project",
     "require": {
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "rakit/validation": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "7"

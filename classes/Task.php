@@ -170,5 +170,23 @@ class Task{
         }
     }
 
+    /**
+     * Create new task and store it in the database
+     * @param $car_id
+     * @param $task
+     * @param $status
+     * @return int id of the new the newly created task
+     */
+    public static function createTask($car_id, $task, $status) : int{
+        $taskInstance = new Task();
+
+        //store task
+        $taskInstance->getDb()->execQuery(" INSERT INTO `task`(`car_id`, `task`, `status`) VALUES (" . $car_id . ", '" . $task . "', ".$status.")");
+        //get id of newly created task
+        $taskId = (int)$taskInstance->getDb()->getAllRows('SELECT max(ID) as id From task')[0]['id'];
+
+        return $taskId;
+    }
+
 
 }

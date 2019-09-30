@@ -48,6 +48,14 @@ class Car
     }
 
     /**
+     * @return Database
+     */
+    public function getDb(): Database
+    {
+        return $this->db;
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -141,8 +149,6 @@ class Car
 
     }
 
-    //TODO: Return an instance of classes/Customer instead of array/null
-
     /**
      * Returns the owner of the car
      * @return Customer/null
@@ -156,11 +162,29 @@ class Car
 
     /**
      * Returns the number of tasks associated with this car
-     * @return int
+     * @return int id of the newly created car
      */
     public function getNumberOfTasksOfCar() : int
     {
         return count($this->db->getAllRows(sprintf('SELECT * FROM task WHERE car_id = %d', $this->getId())));
+    }
+
+    /**
+     * Create a car and store it in the database
+     * @param $customerId
+     * @param $brand
+     * @param $type
+     * @return int id of the newly created car
+     */
+    public static function createCar($customerId, $brand, $type){
+        $car = new Car();
+
+        //store car
+        $car->getDb()->execQuery("INSERT INTO `car`(`customer_id`, `brand`, `type`)  VALUES (" . $customerId . ", '" . $brand . "', '" . $type . "')");
+        //get id of newly created task
+        $carId = (int)$car->getDb()->getAllRows('SELECT max(ID) as id From car')[0]['id'];
+
+        return $carId;
     }
 
 }
