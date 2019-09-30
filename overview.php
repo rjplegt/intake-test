@@ -1,9 +1,7 @@
 <?php
 
-session_start();
-if (!$_SESSION['logged_in']) {
-    header("Location: login.php");
-}
+//start session and check if a user is logged in.
+require_once(__DIR__ . '/services/AuthenticationCheck.php');
 
 //TODO: Format according to PSR-2
 

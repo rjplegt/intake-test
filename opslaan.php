@@ -1,4 +1,9 @@
 <?php
+
+
+//start session and check if a user is logged in.
+require_once(__DIR__ . '/services/AuthenticationCheck.php');
+
 require(__DIR__.'/services/Database.php');
 $db = new Database;
 $type = $_POST['save_type'];
